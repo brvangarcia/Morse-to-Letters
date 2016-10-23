@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width-device-width, initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:100' rel='stylesheet' type='text/css'>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="back.css" media="screen" title="no title">
+    <title>Morse to Letters</title>
+
+    <script type="text/javascript">
+    function sendSMS () {
+      var to = $('#to').val()
+        var body = $('#body').val()
+    $.ajax({
+      type: "GET",
+      url: 'http://970687a2.ngrok.io/sms?to='+to+'&body='+body,
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      },
+      success: function() {
+  // Esta funcion se va a llamar si todo salio chillin
+  alert('worked')
+  },
+});
+}
+    </script>
+
+  </head>
+  <body>
+
+    <h1><center>Welcome</center></h1>
+    <h3><center>To start using Morse to Letters, please write in . and - to convert them in formal alphabet.</center></h3>
+
+
+
+    <div id="box">
+        <textarea id="type" class='autoExpand' rows='3' data-min-rows='3' placeholder='Write . and - to convert them in formal alphabet'></textarea></textarea>
+    </div>
+        <textarea id="two" name="name" rows="4" cols="20"></textarea>
+  <center><button type="button" onClick="submitForm()"  name="submit">Copy the text</button></center>
+
+
+    <br><br><br><br>
+    <h2><center>Send the message to your phone</center></h2>
+
+
+      <form>
+        <div class="group">
+          <input id="to" type="text" required>
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label >Number</label>
+        </div>
+        <div class="group">
+          <input type="text" id="body" required>
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label>Text</label>
+        </div>
+        <center>
+        <a type="button"><button type="button" onClick="sendSMS()" name="button">Send</button></a>
+        </center>
+      </form>
+
+    <script type="text/javascript">
+    var morse = {
+  '.-': 'a',
+   '-...': 'b',
+    '-.-.': 'c',
+     '-..': 'd',
+      '.': 'e',
+  '..-.': 'f',
+   '--.': 'g',
+    '....': 'h',
+     '..': 'i',
+      '.---': 'j',
+  '-.-': 'k',
+   '.-..': 'l',
+    '--': 'm',
+     '-.': 'n',
+      '---': 'o',
+  '.--.': 'p',
+   '--.-': 'q',
+    '.-.': 'r',
+     '...': 's',
+      '-': 't',
+  '..-': 'u',
+   '...-': 'v',
+    '.--': 'w',
+     '-..-': 'x',
+      '-.--': 'y',
+  '--..': 'z',
+   '.----': '1',
+    '..---': '2',
+     '...--': '3',
+  '....-': '4',
+   '.....': '5',
+    '-....': '6',
+     '--...': '7',
+  '---..': '8',
+   '----.': '9',
+    '-----': '0',
+     '.-.-.-': '.',
+  '--..--': ',',
+   '..--..': '?',
+    '-..-.': '/',
+     '.--.-.': '@',
+};
+
+function translate_morse(code) {
+  return (typeof morse[code] === "undefined") ? "" : morse[code];
+}
+
+$('#type').keydown(function(e) {
+  console.log(e.keyCode)
+  switch(e.keyCode) {
+
+      case 81: this.value += "."; break;
+      case 87: this.value += "."; break;
+      case 69: this.value += "."; break;
+      case 82: this.value += "."; break;
+      case 65: this.value += "."; break;
+      case 83: this.value += "."; break;
+      case 68: this.value += "."; break;
+      case 70: this.value += "."; break;
+      case 90: this.value += "."; break;
+      case 88: this.value += "."; break;
+      case 67: this.value += "."; break;
+      case 86: this.value += "."; break;
+
+      case 39: this.value += "-"; break;
+      case 84: this.value += "-"; break;
+      case 89: this.value += "-"; break;
+      case 85: this.value += "-"; break;
+      case 73: this.value += "-"; break;
+      case 79: this.value += "-"; break;
+      case 80: this.value += "-"; break;
+      case 71: this.value += "-"; break;
+      case 72: this.value += "-"; break;
+      case 74: this.value += "-"; break;
+      case 75: this.value += "-"; break;
+      case 76: this.value += "-"; break;
+      case 66: this.value += "-"; break;
+      case 77: this.value += "-"; break;
+      case 78: this.value += "-"; break;
+
+      case 40: this.value += " "; break;
+      case 32: this.value += " "; break;
+
+      case 8: return; // allow backspace
+  }
+  e.preventDefault();
+}).keyup(function() {
+  $('#two').text(
+      this.value.split(" ").map(translate_morse).join("")
+  );
+});
+
+function submitForm () {
+  var text = document.getElementById("two")
+  document.getElementById("body").value = text.value
+}
+
+
+
+
+    $(document)
+  .one('focus.autoExpand', 'textarea.autoExpand', function(){
+      var savedValue = this.value;
+      this.value = '';
+      this.baseScrollHeight = this.scrollHeight;
+      this.value = savedValue;
+  })
+  .on('input.autoExpand', 'textarea.autoExpand', function(){
+      var minRows = this.getAttribute('data-min-rows')|0, rows;
+      this.rows = minRows;
+      rows = Math.ceil((this.scrollHeight - this.baseScrollHeight) / 17);
+      this.rows = minRows + rows;
+  });
+    </script>
+  </body>
+</html>

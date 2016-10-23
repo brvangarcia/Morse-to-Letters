@@ -1,0 +1,22 @@
+
+input[type="button"] {
+    width:20px;
+    clear:both;
+
+}
+
+#prompt {
+    border:thin solid black;
+    width:100px;
+    height: 100px;
+    word-wrap: break-word;
+    overflow: auto;
+}
+
+#two {
+  border: thin solid black;
+  float:left;
+  width:400px;
+  height:200px;
+  margin-right:10px;
+}
